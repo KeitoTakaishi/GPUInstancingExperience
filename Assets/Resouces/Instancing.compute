@@ -1,0 +1,31 @@
+﻿#pragma kernel Emit
+#pragma kernel Iterator
+
+#define THREAD_X 128
+#define THREAD_Y 1
+#define THREAD_Z 1
+
+struct Params
+{
+    float3 emitPos;
+    float3 position;
+    float lifeTime;
+};
+
+
+RWStructuredBuffer<Params> buf;
+
+float2 time; //x = delta, y = time since start
+
+
+[numthreads(THREAD_X, THREAD_Y, THREAD_Z)]
+void Emit(uint id : SV_DispatchThreadID)
+{
+    Params p = buf[id];
+}
+
+[numthreads(THREAD_X, THREAD_Y, THREAD_Z)]
+void Iterator(uint id : SV_DispatchThreadID)
+{
+    Params p = buf[id];
+}
